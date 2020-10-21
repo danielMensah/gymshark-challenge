@@ -6,13 +6,7 @@ import (
 )
 
 func main() {
-	packs := []int{250, 500, 1000, 2000, 5000}
-	var res []int
-	quantity := 12001
-
-	result := order(quantity, packs, res)
-
-	fmt.Printf("%v\n", result)
+	fmt.Print("Hello World")
 }
 
 
