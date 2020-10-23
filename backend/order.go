@@ -1,14 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"math"
-)
-
-func main() {
-	fmt.Print("Hello World")
-}
-
+import "math"
 
 func order (quantity int, packs []int, res []int) []int {
 	if contains(quantity, packs) {
