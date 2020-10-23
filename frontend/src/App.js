@@ -36,6 +36,8 @@ function App() {
 			}
 		});
 
+		setLoading(false);
+
 		if (result.status !== 200) {
 			const errorMessage = await result.text();
 			setError(errorMessage)
