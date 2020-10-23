@@ -1,4 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
 /.idea
-main
-function.zip
+backend/main
+backend/function.zip

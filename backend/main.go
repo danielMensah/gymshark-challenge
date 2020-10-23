@@ -19,6 +19,11 @@ type Response struct {
 
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	data := &Data{}
+	headers := map[string]string{
+		"Access-Control-Allow-Origin": "*",
+		"Access-Control-Allow-Headers" : "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+		"Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+	}
 
 	_ = json.Unmarshal([]byte(request.Body), data)
 
@@ -27,11 +32,13 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusBadRequest,
 			Body: "Quantity must be set or more than 0",
+			Headers: headers,
 		}, nil
 	} else if data.Packs == nil || len(data.Packs) == 0 {
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusOK,
 			Body: "No packs available!",
+			Headers: headers,
 		}, nil
 	}
 
@@ -46,6 +53,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
 		Body: string(jsonData),
+		Headers: headers,
 	}, nil
 }
 
