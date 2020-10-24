@@ -2,28 +2,42 @@ package main
 
 import "math"
 
-func order (quantity int, packs []int, res []int) []int {
+var quantitySnapshot int
+
+func calculatePacksNeeded(quantity int, packs []int, res []int) []int {
+	if len(res) == 0 {
+		quantitySnapshot = quantity
+	}
+
+	remaining := quantity
+
 	if contains(quantity, packs) {
 		res = append(res, quantity)
 	} else {
-		a := getNearest(quantity, packs)
-		b := quantity - a
+		for _, pack := range packs {
+			if remaining >= pack {
+				res = append(res, pack)
+				return calculatePacksNeeded(remaining - pack, packs, res)
+			}
+		}
 
-		res = append(res, a)
-
-		if b > 0 {
-			return order(b, packs, res)
+		if remaining < packs[len(packs) - 1] {
+			res = append(res, packs[len(packs) - 1])
+		} else if remaining > 0 {
+			return calculatePacksNeeded(remaining, packs, res)
 		}
 	}
 
 	sumRes := sum(res)
+	nearest := getNearest(quantitySnapshot, packs)
 
 	if contains(sumRes, packs) {
 		res = []int{sumRes}
+	} else if nearest < sumRes && nearest > quantitySnapshot {
+		res = []int{nearest}
 	}
 
 	return res
-
 }
 
 func getNearest(quantity int, packs []int) int {

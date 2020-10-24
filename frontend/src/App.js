@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
 	const classes = useStyles();
 
-	const [ availablePacks, setAvailablePacks ] = React.useState([ 250, 500, 1000, 2000, 5000 ]);
+	const [ availablePacks, setAvailablePacks ] = React.useState([ 5000, 2000, 1000, 500, 250 ]);
 	const [ newPack, setNewPack ] = React.useState(0);
 	const [ quantity, setQuantity ] = useState(0);
 	const [ packsNeeded, setPacksNeeded ] = useState([]);
@@ -49,7 +49,10 @@ const App = () => {
 
 	const handleAddPack = () => {
 		if (!availablePacks.includes(newPack) && newPack > 0) {
-			setAvailablePacks([ ...availablePacks, newPack ])
+			const data = [ ...availablePacks, newPack ];
+			data.sort((a,b) => b - a)
+
+			setAvailablePacks(data)
 		} else if (newPack === 0) {
 			setError('Pack cannot be 0!');
 		} else if (availablePacks.includes(newPack)) {
@@ -81,6 +84,7 @@ const App = () => {
 
 	return (
 		<div className="App">
+			<h3>Gymshark Challenge</h3>
 			<div className="packs">
 				<Paper component="form" className={classes.root} noValidate autoComplete="off">
 					<TextField onChange={(e) => setNewPack(+e.target.value)} type="number" id="standard-basic" label="New Pack"/>
@@ -109,12 +113,12 @@ const App = () => {
 			<br/>
 			<img src={logo} alt={"asd"} width={200}/>
 			<br/>
-			<div>Gymshark Stickers</div>
+			<div>Gymshark Item</div>
 			<br/>
 			<TextField onChange={(e) => setQuantity(+e.target.value)} type="number" id="standard-basic" label="Quantity"/>
 			<br/>
 			{/*<input placeholder="Enter quantity to order" type="number" onChange={(e) => setQuantity(+e.target.value)}/>*/}
-			<Button className={classes.makeOrderButton} variant="contained" onClick={makeOrder} color="primary">Make Order</Button>
+			<Button className={classes.makeOrderButton} variant="contained" onClick={makeOrder} color="primary">Calculate Packs Needed</Button>
 			{
 				packsNeeded.length > 0 && error.length < 1 ? (
 					<div>Packs needed: {packsNeeded.toString()}</div>

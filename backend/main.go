@@ -5,6 +5,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"net/http"
+	"sort"
 )
 
 type Data struct {
@@ -41,8 +42,13 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		}, nil
 	}
 
+	// sorting available packs as its needed for the calculation later on
+	sort.Slice(data.Packs, func(i, j int) bool {
+		return data.Packs[i] > data.Packs[j]
+	})
+
 	var res []int
-	result := order(data.Quantity, data.Packs, res)
+	result := calculatePacksNeeded(data.Quantity, data.Packs, res)
 
 	response := Response{Packs: result}
 	var jsonData []byte
