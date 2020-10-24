@@ -16,10 +16,6 @@ type Response struct {
 	Packs []int
 }
 
-func main() {
-	lambda.Start(Handler)
-}
-
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	data := &Data{}
 	headers := map[string]string{
@@ -58,4 +54,8 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		Body: string(jsonData),
 		Headers: headers,
 	}, nil
+}
+
+func main() {
+	lambda.Start(Handler)
 }
