@@ -117,7 +117,6 @@ const App = () => {
 			<br/>
 			<TextField onChange={(e) => setQuantity(+e.target.value)} type="number" id="standard-basic" label="Quantity"/>
 			<br/>
-			{/*<input placeholder="Enter quantity to order" type="number" onChange={(e) => setQuantity(+e.target.value)}/>*/}
 			<Button className={classes.makeOrderButton} variant="contained" onClick={makeOrder} color="primary">Calculate Packs Needed</Button>
 			{
 				packsNeeded.length > 0 && error.length < 1 ? (
