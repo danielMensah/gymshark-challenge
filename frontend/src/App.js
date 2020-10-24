@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import SubmitIcon from "@material-ui/icons/Send";
 import Chip from "@material-ui/core/Chip";
 import './App.css';
+const logo = require('./gymshark_logo.jpg');
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	makeOrderButton: {
 		marginTop: 10,
+		marginBottom: 10,
 	}
 }));
 
@@ -105,11 +107,14 @@ const App = () => {
 				</Paper>
 			</div>
 			<br/>
+			<img src={logo} alt={"asd"} width={200}/>
+			<br/>
+			<div>Gymshark Stickers</div>
+			<br/>
 			<TextField onChange={(e) => setQuantity(+e.target.value)} type="number" id="standard-basic" label="Quantity"/>
 			<br/>
 			{/*<input placeholder="Enter quantity to order" type="number" onChange={(e) => setQuantity(+e.target.value)}/>*/}
 			<Button className={classes.makeOrderButton} variant="contained" onClick={makeOrder} color="primary">Make Order</Button>
-			<br/>
 			{
 				packsNeeded.length > 0 && error.length < 1 ? (
 					<div>Packs needed: {packsNeeded.toString()}</div>
